@@ -14,6 +14,16 @@ let _subscribers = {
     currentGif: []
 }
 
+// @ts-ignore
+let _giphyApi = axios.create({
+    baseURL: 'https://api.giphy.com/v1/gifs/trending?api_key=zqo7deG8hwC9AbA1cmJwEdt0dwi4ya1J'
+})
+
+// @ts-ignore
+let _sandboxApi = axios.create({
+    baseURL: 'http://bcw-sandbox.herokuapp.com/api/Josiah/gifs'
+})
+
 function _setState(propName, data) {
     //NOTE add the data to the state
     _state[propName] = data
@@ -33,10 +43,29 @@ export default class GifService {
         return _state.myGifs.map(g => new Gif(g))
     }
     get apiGif() {
-        return _state.gifsApi
+        return _state.gifsApi.map(g => new Gif(g))
     }
     get currentGif() {
         return new Gif(_state.currentGif)
     }
     //endregion
+
+    //Get Giphy API All
+    getTrendingGifs() {
+        _giphyApi.get()
+            .then(res => {
+                _setState("gifsApi", res.data.data)
+                console.log(res.data.data)
+            })
+            .catch(err => {
+                console.error(err)
+            })
+    }
+
+    display(id) {
+        //find id in the list of api gifs
+        //set active
+        let gif = _state.gifsApi.find(g => g.id == id)
+        _setState("currentGif", gif)
+    }
 }

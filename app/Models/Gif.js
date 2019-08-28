@@ -1,16 +1,15 @@
 export default class Gif {
     constructor(data) {
+        this.gifId = data.id || data.gifId
         this.title = data.title
-        this.url = data.url || data.data.embed_url
+        this.myUrl = data.myUrl || data.embed_url
     }
 
     get Template() {
         return `
-            <div class="card">
-                <img src="${this.url}" class="card-img-top">
-                <div class="card-body">
-                    <h5 class="card-title">${this.title}</h5>
-                </div>
+            <div class="col-3">
+                <iframe src="${this.myUrl}" frameborder="0"></iframe>
+                <button class="btn btn-success" onclick="app.controllers.gifController.display('${this.gifId}')">Select</button>
             </div>
         `
     }
