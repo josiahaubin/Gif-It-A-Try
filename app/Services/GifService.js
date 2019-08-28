@@ -2,12 +2,16 @@ import Gif from "../Models/Gif.js";
 
 //Private
 let _state = {
-
+    gifsApi: [],
+    myGifs: [],
+    currentGif: {}
 }
 
 //NOTE methods to run when a given property in state changes
 let _subscribers = {
-
+    gifsApi: [],
+    myGifs: [],
+    currentGif: []
 }
 
 function _setState(propName, data) {
@@ -23,4 +27,16 @@ export default class GifService {
     addSubscriber(propName, fn) {
         _subscribers[propName].push(fn)
     }
+
+    //#region Getters
+    get myGif() {
+        return _state.myGifs.map(g => new Gif(g))
+    }
+    get apiGif() {
+        return _state.gifsApi
+    }
+    get currentGif() {
+        return new Gif(_state.currentGif)
+    }
+    //endregion
 }
