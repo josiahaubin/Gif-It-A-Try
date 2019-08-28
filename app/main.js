@@ -1,10 +1,10 @@
-import ValuesController from "./Controllers/ValuesController.js";
+import GifController from "./Controllers/GifController.js";
 
 
 class App {
     constructor() {
         this.controllers = {
-            valuesController: new ValuesController()
+            gifController: new GifController()
         }
     }
 }

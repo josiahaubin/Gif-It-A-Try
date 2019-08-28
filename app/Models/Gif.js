@@ -1,4 +1,4 @@
-export default class Value {
+export default class Gif {
     constructor(data) {
         this.title = data.title
     }
