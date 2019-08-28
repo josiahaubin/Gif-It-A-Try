@@ -8,6 +8,7 @@ export default class Gif {
     get Template() {
         return `
             <div class="col-3">
+                <p>${this.title}</p>
                 <iframe src="${this.myUrl}" frameborder="0"></iframe>
                 <button class="btn btn-success" onclick="app.controllers.gifController.display('${this.gifId}')">Select</button>
             </div>

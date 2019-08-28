@@ -14,8 +14,25 @@ function _drawTrendingGifs() {
 }
 
 function _drawCurrentGif() {
+    let template = `<form onsubmit="app.controllers.gifController.addGif(event)">
+    <div class="form-group">
+    <label for="title">Title</label>
+    <input type="text" class="form-control" id="title" placeholder="Enter gif title">
+    </div>
+    <button class="btn btn-success">Add Gif</button>
+    </form>
+    `
+    document.getElementById('current-gif').innerHTML = template += _gifService.currentGif.Template
+}
+
+function _drawMyGif() {
     let template = ``
-    document.getElementById('current-gif').innerHTML = _gifService.currentGif.Template
+    let myG = _gifService.myGif
+    myG.forEach(mG => {
+        template += mG.Template
+    })
+
+    document.getElementById('my-gifs').innerHTML = template
 }
 
 //Public
@@ -24,11 +41,23 @@ export default class GifController {
         //NOTE Register all subscribers
         _gifService.addSubscriber("gifsApi", _drawTrendingGifs)
         _gifService.addSubscriber("currentGif", _drawCurrentGif)
+        _gifService.addSubscriber("myGifs", _drawMyGif)
         //NOTE Retrieve data
         _gifService.getTrendingGifs()
+        _gifService.getMyGifs()
     }
 
     display(id) {
         _gifService.display(id)
+    }
+
+    addGif(event) {
+        event.preventDefault()
+        let form = event.target
+
+        let title = {
+            title: form.title.value
+        }
+        _gifService.addGif(title)
     }
 }

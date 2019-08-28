@@ -62,6 +62,31 @@ export default class GifService {
             })
     }
 
+    //Get Sandbox Api
+    getMyGifs() {
+        _sandboxApi.get()
+            .then(res => {
+                _setState("myGifs", res.data.data)
+                console.log(res.data.data);
+
+            })
+            .catch(err => {
+                console.error(err);
+            })
+    }
+
+    //Put trending gif into my gifs
+    addGif(title) {
+        _sandboxApi.post('', _state.currentGif)
+            .then(res => {
+                _state.myGifs.push(new Gif(res.data.data))
+                _setState("myGifs", _state.myGifs)
+            })
+            .catch(err => {
+                console.error(err);
+            })
+    }
+
     display(id) {
         //find id in the list of api gifs
         //set active
